@@ -8,9 +8,12 @@ import me.ferdz.placeableitems.utils.VoxelShapesUtil;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+// TODO: Make this class streamlined for registration
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PlaceableItemsBlockRegistry {
@@ -30,6 +33,11 @@ public class PlaceableItemsBlockRegistry {
                 .build()
                 .setShape(VoxelShapesUtil.create(5, 9, 5))
                 .register("apple_block", Items.APPLE);
+
+        if(GENERATE_WIKI) {
+            WikiDataGenerator generator = new WikiDataGenerator();
+            generator.generate("test.json");
+        }
     }
 
     @SubscribeEvent
