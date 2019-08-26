@@ -1,9 +1,10 @@
 package me.ferdz.placeableitems.init;
 
 import me.ferdz.placeableitems.block.PlaceableItemsBlock;
-import me.ferdz.placeableitems.block.component.AbstractBlockComponent;
 import me.ferdz.placeableitems.block.component.impl.BoneBlockComponent;
 import me.ferdz.placeableitems.utils.VoxelShapesUtil;
+import me.ferdz.placeableitems.wiki.Wiki;
+import me.ferdz.placeableitems.wiki.WikiDataGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -16,6 +17,9 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class PlaceableItemsBlockRegistry {
 
+    private static final boolean GENERATE_WIKI = System.getenv().containsKey("GENERATE_WIKI");
+
+    @Wiki(description = "A bone")
     public static PlaceableItemsBlock BONE;
 
     @SubscribeEvent
@@ -24,6 +28,11 @@ public class PlaceableItemsBlockRegistry {
                 .setShape(VoxelShapesUtil.create(0, 0, 0, 16, 4, 16))
                 .addComponent(new BoneBlockComponent())
                 .register("bone_block", Items.BONE);
+
+        if(GENERATE_WIKI) {
+            WikiDataGenerator generator = new WikiDataGenerator();
+            generator.generate("test.json");
+        }
     }
 
     @SubscribeEvent
