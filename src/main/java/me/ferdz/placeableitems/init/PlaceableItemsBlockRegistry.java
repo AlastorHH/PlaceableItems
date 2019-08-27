@@ -3,8 +3,6 @@ package me.ferdz.placeableitems.init;
 import me.ferdz.placeableitems.block.PlaceableItemsBlock;
 import me.ferdz.placeableitems.block.PlaceableItemsBlockBuilder;
 import me.ferdz.placeableitems.block.component.impl.BiPositionBlockComponent;
-import me.ferdz.placeableitems.block.component.AbstractBlockComponent;
-import me.ferdz.placeableitems.block.component.impl.BiPositionBlockComponent;
 import me.ferdz.placeableitems.block.component.impl.BoneBlockComponent;
 import me.ferdz.placeableitems.utils.VoxelShapesUtil;
 import me.ferdz.placeableitems.wiki.Wiki;
@@ -12,7 +10,6 @@ import me.ferdz.placeableitems.wiki.WikiDataGenerator;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,6 +23,8 @@ public class PlaceableItemsBlockRegistry {
 
     @Wiki(description = "A bone")
     public static PlaceableItemsBlock BONE;
+
+    @Wiki(description = "An apple")
     public static PlaceableItemsBlock APPLE;
 
     @SubscribeEvent
