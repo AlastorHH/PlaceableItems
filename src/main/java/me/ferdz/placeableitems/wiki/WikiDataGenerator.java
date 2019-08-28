@@ -3,8 +3,6 @@ package me.ferdz.placeableitems.wiki;
 import com.google.gson.Gson;
 import me.ferdz.placeableitems.block.PlaceableItemsBlock;
 import me.ferdz.placeableitems.init.PlaceableItemsBlockRegistry;
-import net.minecraft.block.Block;
-import net.minecraftforge.event.RegistryEvent;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -30,12 +28,12 @@ public class WikiDataGenerator {
                 field.setAccessible(true);
                 Wiki wikiAnnotation = field.getAnnotation(Wiki.class);
                 PlaceableItemsBlock block = (PlaceableItemsBlock) field.get(null);
-                items.add(new WikiItem(block, wikiAnnotation.description()));
+                items.add(new WikiItem(block, wikiAnnotation));
             }
             Gson gson = new Gson();
-            System.out.println(gson.toJson(items));
+            System.err.println(gson.toJson(items));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             // Should never happen
         }
     }

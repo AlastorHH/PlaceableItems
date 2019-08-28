@@ -1,15 +1,25 @@
 package me.ferdz.placeableitems;
 
 import me.ferdz.placeableitems.event.ItemPlaceHandler;
+import me.ferdz.placeableitems.wiki.WikiDataGenerator;
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 @Mod(PlaceableItems.MODID)
 public class PlaceableItems {
 
     public static final String MODID = "placeableitems";
+    private static final boolean GENERATE_WIKI = System.getenv().containsKey("GENERATE_WIKI");
 
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
@@ -23,6 +33,9 @@ public class PlaceableItems {
 //        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 //        // Register the doClientStuff method for modloading
 //        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::doClientStuff);
+
+        if(GENERATE_WIKI)
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(this::generateWiki);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(new ItemPlaceHandler());
@@ -59,4 +72,9 @@ public class PlaceableItems {
 //        // do something when the server starts
 //        LOGGER.info("HELLO from server starting");
 //    }
+
+    public void generateWiki(final FMLLoadCompleteEvent e) {
+        WikiDataGenerator generator = new WikiDataGenerator();
+        generator.generate("test.json");
+    }
 }

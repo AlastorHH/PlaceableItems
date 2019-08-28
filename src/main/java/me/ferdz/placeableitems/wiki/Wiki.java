@@ -8,5 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Wiki {
-    String description() default "No description";
+    String description() default "This block has no description.";
+    String model() default "";
+    String texture() default "";
 }
