@@ -75,6 +75,6 @@ public class PlaceableItems {
 
     public void generateWiki(final FMLLoadCompleteEvent e) {
         WikiDataGenerator generator = new WikiDataGenerator();
-        generator.generate("test.json");
+        generator.generate("data.json");
     }
 }
