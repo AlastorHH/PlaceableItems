@@ -7,7 +7,7 @@
  *  ModelViewer
  *****************************/
 
-function ModelViewer(container) {
+function ModelViewer(container, dimension = null, position = null, target = null) {
 
 
   // container
@@ -23,15 +23,26 @@ function ModelViewer(container) {
   this.container.appendChild(this.element)
 
   // get element dimensions
-  var rect = this.element.getBoundingClientRect()
+  this.dimension = dimension
+  if(dimension == null)
+    var rect = this.element.getBoundingClientRect()
+  else
+    var rect = dimension
 
 
   // camera
 
   this.camera = new THREE.PerspectiveCamera(60, rect.width / rect.height, 1, 1000)
-  this.camera.position.x = 16
-  this.camera.position.y = 16
-  this.camera.position.z = 32
+
+  if(position == null) {
+    this.camera.position.x = 16
+    this.camera.position.y = 16
+    this.camera.position.z = 32
+  } else {
+    this.camera.position.x = position.x
+    this.camera.position.y = position.y
+    this.camera.position.z = position.z
+  }
 
 
   // scene
@@ -60,11 +71,18 @@ function ModelViewer(container) {
   // controls
 
   this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
-  this.controls.enableDamping = true
   this.controls.dampingFactor = 0.2
   this.controls.zoomSpeed = 1.4
   this.controls.rotateSpeed = 0.6
   this.controls.enableKeys = false
+  this.controls.enableZoom = false
+  this.controls.enablePan = false
+
+  if(target != null) {
+    this.controls.target.x = target.x
+    this.controls.target.y = target.y
+    this.controls.target.z = target.z
+  }
 
 
   // append viewer
@@ -101,8 +119,10 @@ function ModelViewer(container) {
   // resize
 
   this.resize = function() {
-
-    var rect = self.element.getBoundingClientRect()
+    if(self.dimension == null)
+      var rect = self.element.getBoundingClientRect()
+    else
+      var rect = self.dimension
 
     self.camera.aspect = rect.width / rect.height
     self.camera.updateProjectionMatrix()
@@ -701,7 +721,7 @@ function JsonModel(name, rawModel, texturesReference, clipUVs) {
 
 
           // check
-          
+
           if (clipUVs) {
             uv.forEach(function(e, pos) {if (typeof e != 'number') throw new Error('The "uv" property for "' + face + '" face in element "' + index + '" is invalid (got "' + e + '" at index "' + pos + '").')})
             uv.map(function(e) {

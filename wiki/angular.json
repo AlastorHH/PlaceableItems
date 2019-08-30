@@ -13,12 +13,12 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/wiki",
+            "outputPath": "../docs",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "src/favicon.ico",
               "src/assets"
@@ -27,7 +27,9 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "src/mc-model-viewer.js"
+              "src/assets/scripts/three.js",
+              "src/assets/scripts/orbit-controls.js",
+              "src/assets/scripts/mc-model-viewer.js"
             ]
           },
           "configurations": {

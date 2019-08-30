@@ -2,7 +2,6 @@ package me.ferdz.placeableitems.wiki;
 
 import com.google.common.base.Charsets;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import me.ferdz.placeableitems.block.PlaceableItemsBlock;
 import me.ferdz.placeableitems.init.PlaceableItemsBlockRegistry;
 
@@ -37,14 +36,17 @@ public class WikiDataGenerator {
             }
             Gson gson = new Gson();
 
-            boolean created = new File("../docs/assets/textures").mkdirs();
-            created = new File("../docs/assets/models").mkdirs();
+            String[] destinations = new String[]{"../docs/assets/", "../wiki/src/assets/"};
+            for(String d : destinations) {
+                boolean created = new File(d + "textures").mkdirs();
+                created = new File(d + "models").mkdirs();
 
-            Files.write(Paths.get("../docs/assets/", filePath), gson.toJson(items).getBytes(Charsets.UTF_8));
-            for(WikiItem item : items) {
-                Files.write(Paths.get("../docs/assets/textures", item.itemName + ".png"), item.texture);
-                Files.write(Paths.get("../docs/assets/models", item.itemName + ".json"),
-                        gson.toJson(item.model).getBytes(Charsets.UTF_8));
+                Files.write(Paths.get(d, filePath), gson.toJson(items).getBytes(Charsets.UTF_8));
+                for(WikiItem item : items) {
+                    Files.write(Paths.get(d, "textures", item.itemName + ".png"), item.texture);
+                    Files.write(Paths.get(d, "models", item.itemName + ".json"),
+                            gson.toJson(item.model).getBytes(Charsets.UTF_8));
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
